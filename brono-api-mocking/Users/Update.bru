@@ -1,0 +1,17 @@
+meta {
+  name: Update
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{URL}}/users/1
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Malesh"
+  }
+}
