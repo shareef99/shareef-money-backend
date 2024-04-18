@@ -1,0 +1,17 @@
+meta {
+  name: Monthly
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{URL}}/transactions/monthly?user_id=1&month=5&year=2024
+  body: none
+  auth: none
+}
+
+query {
+  user_id: 1
+  month: 5
+  year: 2024
+}

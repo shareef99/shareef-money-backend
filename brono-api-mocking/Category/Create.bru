@@ -1,0 +1,19 @@
+meta {
+  name: Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{URL}}/categories
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "user_id": 1,
+    "name": "Food",
+    "type": "expense"
+  }
+}
