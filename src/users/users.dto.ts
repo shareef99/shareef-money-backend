@@ -4,14 +4,8 @@ import {
   IsBoolean,
   IsEmail,
   IsOptional,
-  ValidationOptions,
-  ValidateIf,
 } from "class-validator";
 import { PartialType } from "@nestjs/mapped-types";
-
-export function IsNullable(validationOptions?: ValidationOptions) {
-  return ValidateIf((_object, value) => value !== null, validationOptions);
-}
 
 export class CreateUserDto {
   @IsNotEmpty()
