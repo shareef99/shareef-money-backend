@@ -1,4 +1,5 @@
-import { Column, Model, Table } from "sequelize-typescript";
+import { Column, HasMany, Model, Table } from "sequelize-typescript";
+import { Account } from "src/accounts/accounts.model";
 
 @Table
 export class User extends Model {
@@ -28,4 +29,7 @@ export class User extends Model {
 
   @Column({ defaultValue: true })
   is_active: boolean;
+
+  @HasMany(() => Account)
+  accounts: Account[];
 }
