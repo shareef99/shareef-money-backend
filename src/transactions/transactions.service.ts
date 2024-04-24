@@ -57,7 +57,10 @@ export class TransactionsService {
   }
 
   findByUserId(id: number) {
-    return this.transactionModel.findAll({ where: { user_id: id } });
+    return this.transactionModel.findAll({
+      where: { user_id: id },
+      include: ["category", "account", "sub_category"],
+    });
   }
 
   findByAccountId(id: number) {
@@ -88,34 +91,9 @@ export class TransactionsService {
         },
       },
       include: ["category", "account", "sub_category"],
-      order: [["transaction_at", "ASC"]],
+      order: [["transaction_at", "DESC"]],
     });
 
-    // const dailyTransactionsMap = new Map<string, DailyTransaction>();
-    // transactions.forEach((transaction) => {
-    //   const transactionAt = new Date(transaction.transaction_at).toISOString();
-    //   let dailyTransaction = dailyTransactionsMap.get(transactionAt);
-
-    //   if (!dailyTransaction) {
-    //     dailyTransaction = {
-    //       transaction_at: transactionAt,
-    //       total_income: 0,
-    //       total_expense: 0,
-    //       transactions: [],
-    //     };
-    //   }
-
-    //   if (transaction.type === "income") {
-    //     dailyTransaction.total_income += transaction.amount;
-    //   } else if (transaction.type === "expense") {
-    //     dailyTransaction.total_expense += transaction.amount;
-    //   }
-
-    //   dailyTransaction.transactions.push(transaction);
-    //   dailyTransactionsMap.set(transactionAt, dailyTransaction);
-    // });
-
-    // return Array.from(dailyTransactionsMap.values());
     return transactions;
   }
 

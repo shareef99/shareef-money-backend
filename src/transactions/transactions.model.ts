@@ -28,7 +28,7 @@ export class Transaction extends Model {
   @Column({ allowNull: false })
   amount: number;
 
-  @Column({ allowNull: false })
+  @Column({ allowNull: false, type: DataType.DATE })
   transaction_at: Date;
 
   @Column({ allowNull: false })
