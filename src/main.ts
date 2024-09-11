@@ -15,6 +15,6 @@ async function bootstrap() {
     allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   });
-  await app.listen(9000, () => console.log("Server is running on port 6000"));
+  await app.listen(9000, () => console.log("Server is running on port 9000"));
 }
 bootstrap();
