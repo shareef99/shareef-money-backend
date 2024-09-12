@@ -54,7 +54,20 @@ export class UsersService {
       refer_code: this.generateRandomString(6),
     });
 
-    return { message: "Signup successfully", user: newUser };
+    return {
+      message: "Signup successfully",
+      user: {
+        id: newUser.id,
+        name: newUser.name,
+        email: newUser.email,
+        mobile: newUser.mobile,
+        currency: newUser.currency,
+        month_start_date: newUser.month_start_date,
+        week_start_day: newUser.week_start_day,
+        refer_code: newUser.refer_code,
+        is_active: newUser.is_active,
+      },
+    };
   }
 
   async signin(data: SigninDto) {
