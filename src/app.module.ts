@@ -11,6 +11,7 @@ import { SubCategoriesModule } from "./sub-categories/sub-categories.module";
 import { Category } from "src/categories/categories.model";
 import { SubCategory } from "src/sub-categories/sub-categories.model";
 import { TransactionsModule } from "./transactions/transactions.module";
+// import { Sequelize } from "sequelize-typescript";
 
 @Module({
   imports: [
@@ -37,7 +38,7 @@ export class AppModule {
   // sequelize = new Sequelize({
   //   dialect: "sqlite", // Specify your database dialect (e.g., sqlite, mysql, postgres)
   //   storage: "database/database.sqlite", // Path to your SQLite database file
-  //   models: [User],
+  //   models: [User, Account, Category, SubCategory],
   // });
   // // Sync models with the database
   // async syncDatabase() {

@@ -45,10 +45,28 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {}
 
 export class SigninDto {
   @IsNotEmpty()
+  @IsEmail()
+  email: string;
+
+  @IsNotEmpty()
+  @IsString()
+  password: string;
+}
+
+export class SignupDto {
+  @IsNotEmpty()
   @IsString()
   name: string;
 
   @IsNotEmpty()
   @IsEmail()
   email: string;
+
+  @IsNotEmpty()
+  @IsString()
+  password: string;
+
+  @IsNotEmpty()
+  @IsString()
+  confirmPassword: string;
 }

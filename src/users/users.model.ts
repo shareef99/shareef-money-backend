@@ -12,6 +12,9 @@ export class User extends Model {
   @Column({ allowNull: false, unique: true })
   email: string;
 
+  @Column({ allowNull: false, defaultValue: "password" })
+  password: string;
+
   @Column({ allowNull: true, unique: true })
   mobile: string;
 

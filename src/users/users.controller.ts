@@ -10,7 +10,12 @@ import {
   Put,
 } from "@nestjs/common";
 import { UsersService } from "./users.service";
-import { CreateUserDto, SigninDto, UpdateUserDto } from "src/users/users.dto";
+import {
+  CreateUserDto,
+  SigninDto,
+  SignupDto,
+  UpdateUserDto,
+} from "src/users/users.dto";
 
 @Controller("users")
 export class UsersController {
@@ -19,6 +24,11 @@ export class UsersController {
   @Post("signin")
   async signin(@Body(ValidationPipe) data: SigninDto) {
     return this.usersService.signin(data);
+  }
+
+  @Post("signup")
+  async signup(@Body(ValidationPipe) data: SignupDto) {
+    return this.usersService.signup(data);
   }
 
   @Post()
