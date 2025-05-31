@@ -1,0 +1,15 @@
+{
+  "imports": {
+    "hono": "npm:hono"
+  },
+  "tasks": {
+    "dev": "deno run --watch --allow-net --allow-read --allow-env ./src/main.ts",
+    "clean": "deno cache --reload ./src/main.ts",
+    "migration:generate": "deno --env -A --node-modules-dir npm:drizzle-kit generate",
+    "migration:run": "deno --env -A --node-modules-dir npm:drizzle-kit migrate"
+  },
+  "compilerOptions": {
+    "jsx": "precompile",
+    "jsxImportSource": "hono/jsx"
+  }
+}
