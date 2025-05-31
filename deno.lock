@@ -1,16 +1,28 @@
 {
   "version": "5",
   "specifiers": {
-    "npm:hono@*": "4.6.14"
+    "jsr:@std/dotenv@~0.225.5": "0.225.5",
+    "npm:hono@*": "4.6.14",
+    "npm:zod@^3.25.42": "3.25.42"
+  },
+  "jsr": {
+    "@std/dotenv@0.225.5": {
+      "integrity": "9ce6f9d0ec3311f74a32535aa1b8c62ed88b1ab91b7f0815797d77a6f60c922f"
+    }
   },
   "npm": {
     "hono@4.6.14": {
       "integrity": "sha512-j4VkyUp2xazGJ8eCCLN1Vm/bxdvm/j5ZuU9AIjLu9vapn2M44p9L3Ktr9Vnb2RN2QtcR/wVjZVMlT5k7GJQgPw=="
+    },
+    "zod@3.25.42": {
+      "integrity": "sha512-PcALTLskaucbeHc41tU/xfjfhcz8z0GdhhDcSgrCTmSazUuqnYqiXO63M0QUBVwpBlsLsNVn5qHSC5Dw3KZvaQ=="
     }
   },
   "workspace": {
     "dependencies": [
-      "npm:hono@*"
+      "jsr:@std/dotenv@~0.225.5",
+      "npm:hono@*",
+      "npm:zod@^3.25.42"
     ]
   }
 }

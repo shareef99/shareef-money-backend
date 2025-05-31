@@ -1,6 +1,8 @@
 {
   "imports": {
-    "hono": "npm:hono"
+    "@std/dotenv": "jsr:@std/dotenv@^0.225.5",
+    "hono": "npm:hono",
+    "zod": "npm:zod@^3.25.42"
   },
   "tasks": {
     "dev": "deno run --watch --allow-net --allow-read --allow-env ./src/main.ts",
