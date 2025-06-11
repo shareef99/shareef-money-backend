@@ -7,7 +7,7 @@ import {
 } from "drizzle-orm/pg-core";
 import { weekDays } from "../../types/enums.ts";
 
-export const usersTable = pgTable("users", {
+export const userTable = pgTable("users", {
   id: serial("id").primaryKey(),
   name: varchar("name").notNull(),
   email: varchar("email").notNull().unique(),

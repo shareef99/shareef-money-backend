@@ -3,7 +3,7 @@ import app from "../../app.ts";
 import { db } from "../../db/index.ts";
 import { loginSchema } from "./validators.ts";
 import { eq } from "drizzle-orm";
-import { usersTable } from "./schema.ts";
+import { userTable } from "./schema.ts";
 import { TokenPayload } from "../../types/app.ts";
 import { decode, sign, verify } from "hono/jwt";
 import env from "../../env.ts";
@@ -12,19 +12,19 @@ import { cookieKeys } from "../../constants/index.ts";
 import { generateReferralCode } from "../../helpers/index.ts";
 import { HTTPException } from "hono/http-exception";
 
-export const usersRouter = app.basePath("/users");
+export const userRouter = app.basePath("/users");
 
-usersRouter.get("/", async (c) => {
-  const users = await db.query.usersTable.findMany();
+userRouter.get("/", async (c) => {
+  const users = await db.query.userTable.findMany();
 
   return c.json({ users });
 });
 
-usersRouter.post("/login", zValidator("json", loginSchema), async (c) => {
+userRouter.post("/login", zValidator("json", loginSchema), async (c) => {
   const payload = c.req.valid("json");
 
-  const existingUser = await db.query.usersTable.findFirst({
-    where: eq(usersTable.email, payload.email),
+  const existingUser = await db.query.userTable.findFirst({
+    where: eq(userTable.email, payload.email),
   });
 
   if (existingUser) {
@@ -68,7 +68,7 @@ usersRouter.post("/login", zValidator("json", loginSchema), async (c) => {
   }
 
   const [createdUser] = await db
-    .insert(usersTable)
+    .insert(userTable)
     .values({
       name: payload.name,
       email: payload.email,
@@ -112,7 +112,7 @@ usersRouter.post("/login", zValidator("json", loginSchema), async (c) => {
   return c.json({ user: createdUser, accessToken, refreshToken });
 });
 
-usersRouter.post("/refresh", async (c) => {
+userRouter.post("/refresh", async (c) => {
   const refreshToken = await getSignedCookie(
     c,
     env.REFRESH_SECRET_KEY,
@@ -137,8 +137,8 @@ usersRouter.post("/refresh", async (c) => {
 
   const userId = decoded.payload.id as number;
 
-  const user = await db.query.usersTable.findFirst({
-    where: eq(usersTable.id, userId),
+  const user = await db.query.userTable.findFirst({
+    where: eq(userTable.id, userId),
   });
 
   if (!user) {
