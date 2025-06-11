@@ -5,9 +5,10 @@
     "jsr:@std/dotenv@~0.225.5": "0.225.5",
     "npm:@hono/zod-validator@0.7": "0.7.0_hono@4.7.11_zod@3.25.42",
     "npm:@types/pg@^8.15.2": "8.15.2",
+    "npm:drizzle-kit@*": "0.31.1_esbuild@0.25.5",
     "npm:drizzle-kit@~0.31.1": "0.31.1_esbuild@0.25.5",
-    "npm:drizzle-orm@~0.44.1": "0.44.1_@types+pg@8.15.2_pg@8.16.0",
-    "npm:drizzle-zod@~0.8.2": "0.8.2_drizzle-orm@0.44.1__@types+pg@8.15.2__pg@8.16.0_zod@3.25.42_@types+pg@8.15.2_pg@8.16.0",
+    "npm:drizzle-orm@~0.44.2": "0.44.2_@types+pg@8.15.2_pg@8.16.0",
+    "npm:drizzle-zod@~0.8.2": "0.8.2_drizzle-orm@0.44.2__@types+pg@8.15.2__pg@8.16.0_zod@3.25.42_@types+pg@8.15.2_pg@8.16.0",
     "npm:hono@^4.7.11": "4.7.11",
     "npm:pg@^8.16.0": "8.16.0",
     "npm:zod@^3.25.42": "3.25.42"
@@ -315,17 +316,11 @@
       ],
       "bin": true
     },
-    "drizzle-orm@0.44.1_@types+pg@8.15.2": {
-      "integrity": "sha512-prIWOlwJbiYInvcJxE+IMiJCtMiFVrSUJCwx6AXSJvGOdLu35qZ46QncTZDgloiLNCG0XxTC8agQElSmsl++TA==",
-      "dependencies": [
-        "@types/pg"
-      ],
-      "optionalPeers": [
-        "@types/pg"
-      ]
+    "drizzle-orm@0.44.1": {
+      "integrity": "sha512-prIWOlwJbiYInvcJxE+IMiJCtMiFVrSUJCwx6AXSJvGOdLu35qZ46QncTZDgloiLNCG0XxTC8agQElSmsl++TA=="
     },
-    "drizzle-orm@0.44.1_@types+pg@8.15.2_pg@8.16.0": {
-      "integrity": "sha512-prIWOlwJbiYInvcJxE+IMiJCtMiFVrSUJCwx6AXSJvGOdLu35qZ46QncTZDgloiLNCG0XxTC8agQElSmsl++TA==",
+    "drizzle-orm@0.44.2_@types+pg@8.15.2_pg@8.16.0": {
+      "integrity": "sha512-zGAqBzWWkVSFjZpwPOrmCrgO++1kZ5H/rZ4qTGeGOe18iXGVJWf3WPfHOVwFIbmi8kHjfJstC6rJomzGx8g/dQ==",
       "dependencies": [
         "@types/pg",
         "pg"
@@ -335,17 +330,10 @@
         "pg"
       ]
     },
-    "drizzle-zod@0.8.2_drizzle-orm@0.44.1__@types+pg@8.15.2__pg@8.16.0_zod@3.25.42_@types+pg@8.15.2_pg@8.16.0": {
+    "drizzle-zod@0.8.2_drizzle-orm@0.44.2__@types+pg@8.15.2__pg@8.16.0_zod@3.25.42_@types+pg@8.15.2_pg@8.16.0": {
       "integrity": "sha512-9Do/16OjFFNrQDZgvMtxtDDwKWbFOxUAIwNPKX98SfxrP8H18vhN1BvNXbhelLcdgCE7GEaXDJqBjMExSkhpkA==",
       "dependencies": [
-        "drizzle-orm@0.44.1_@types+pg@8.15.2_pg@8.16.0",
-        "zod"
-      ]
-    },
-    "drizzle-zod@0.8.2_drizzle-orm@0.44.1__@types+pg@8.15.2_zod@3.25.42_@types+pg@8.15.2": {
-      "integrity": "sha512-9Do/16OjFFNrQDZgvMtxtDDwKWbFOxUAIwNPKX98SfxrP8H18vhN1BvNXbhelLcdgCE7GEaXDJqBjMExSkhpkA==",
-      "dependencies": [
-        "drizzle-orm@0.44.1_@types+pg@8.15.2",
+        "drizzle-orm@0.44.2_@types+pg@8.15.2_pg@8.16.0",
         "zod"
       ]
     },
@@ -560,7 +548,7 @@
       "npm:@hono/zod-validator@0.7",
       "npm:@types/pg@^8.15.2",
       "npm:drizzle-kit@~0.31.1",
-      "npm:drizzle-orm@~0.44.1",
+      "npm:drizzle-orm@~0.44.2",
       "npm:drizzle-zod@~0.8.2",
       "npm:hono@^4.7.11",
       "npm:pg@^8.16.0",
