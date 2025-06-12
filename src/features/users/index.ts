@@ -1,7 +1,7 @@
 import { zValidator } from "@hono/zod-validator";
 import app from "../../app.ts";
 import { db } from "../../db/index.ts";
-import { loginSchema } from "./validators.ts";
+import { loginSchema, updateUserSchema } from "./validators.ts";
 import { eq } from "drizzle-orm";
 import { userTable } from "./schema.ts";
 import { TokenPayload } from "../../types/app.ts";
@@ -12,6 +12,7 @@ import { cookieKeys } from "../../constants/index.ts";
 import { generateReferralCode } from "../../helpers/index.ts";
 import { HTTPException } from "hono/http-exception";
 import { authMiddleware } from "../../middlewares/auth.ts";
+import { validateParamsId } from "../../middlewares/validators.ts";
 
 export const userRouter = app.basePath("/users");
 
@@ -185,3 +186,37 @@ userRouter.post("/refresh", async (c) => {
     refreshToken: newRefreshToken,
   });
 });
+
+userRouter.get(":id", authMiddleware, validateParamsId, async (c) => {
+  const { id } = c.req.valid("param");
+  const user = await db.query.userTable.findFirst({
+    where: eq(userTable.id, id),
+  });
+
+  if (!user) {
+    throw new HTTPException(400, {
+      message: "Invalid user id",
+    });
+  }
+
+  return c.json({ user });
+});
+
+userRouter.put(
+  ":id",
+  authMiddleware,
+  validateParamsId,
+  zValidator("json", updateUserSchema),
+  async (c) => {
+    const { id } = c.req.valid("param");
+    const payload = c.req.valid("json");
+
+    const [updatedUser] = await db
+      .update(userTable)
+      .set(payload)
+      .where(eq(userTable.id, id))
+      .returning();
+
+    return c.json({ user: updatedUser });
+  }
+);
