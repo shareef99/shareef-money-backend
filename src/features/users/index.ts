@@ -11,10 +11,11 @@ import { getSignedCookie, setSignedCookie } from "hono/cookie";
 import { cookieKeys } from "../../constants/index.ts";
 import { generateReferralCode } from "../../helpers/index.ts";
 import { HTTPException } from "hono/http-exception";
+import { authMiddleware } from "../../middlewares/auth.ts";
 
 export const userRouter = app.basePath("/users");
 
-userRouter.get("/", async (c) => {
+userRouter.get("/", authMiddleware, async (c) => {
   const users = await db.query.userTable.findMany();
 
   return c.json({ users });
