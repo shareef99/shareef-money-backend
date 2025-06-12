@@ -6,6 +6,8 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 import { weekDays } from "../../types/enums.ts";
+import { relations } from "drizzle-orm/relations";
+import { categoryTable } from "../category/schema.ts";
 
 export const userTable = pgTable("users", {
   id: serial("id").primaryKey(),
@@ -24,3 +26,7 @@ export const userTable = pgTable("users", {
     .$onUpdate(() => new Date())
     .notNull(),
 });
+
+export const userRelations = relations(userTable, ({ many }) => ({
+  categories: many(categoryTable),
+}));
