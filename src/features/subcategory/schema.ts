@@ -1,4 +1,10 @@
-import { integer, pgTable, serial, varchar } from "drizzle-orm/pg-core";
+import {
+  integer,
+  pgTable,
+  serial,
+  timestamp,
+  varchar,
+} from "drizzle-orm/pg-core";
 import { categoryTable } from "../category/schema.ts";
 import { relations } from "drizzle-orm/relations";
 
@@ -8,6 +14,11 @@ export const subcategoryTable = pgTable("subcategories", {
     .references(() => categoryTable.id)
     .notNull(),
   name: varchar("name").notNull(),
+  created_at: timestamp().defaultNow().notNull(),
+  updated_at: timestamp()
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
 });
 
 export const subcategoryRelations = relations(subcategoryTable, ({ one }) => ({

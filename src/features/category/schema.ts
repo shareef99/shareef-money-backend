@@ -1,4 +1,10 @@
-import { integer, pgTable, serial, varchar } from "drizzle-orm/pg-core";
+import {
+  integer,
+  pgTable,
+  serial,
+  timestamp,
+  varchar,
+} from "drizzle-orm/pg-core";
 import { userTable } from "../users/schema.ts";
 import { categoryTypes } from "../../types/enums.ts";
 import { relations } from "drizzle-orm/relations";
@@ -11,6 +17,11 @@ export const categoryTable = pgTable("categories", {
     .notNull(),
   name: varchar("name").notNull(),
   type: varchar("type", { enum: categoryTypes }).default("expense").notNull(),
+  created_at: timestamp().defaultNow().notNull(),
+  updated_at: timestamp()
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
 });
 
 export const categoryRelations = relations(categoryTable, ({ one, many }) => ({
