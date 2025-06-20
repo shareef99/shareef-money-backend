@@ -6,16 +6,17 @@ import { categoryTable } from "./schema.ts";
 import { HTTPException } from "hono/http-exception";
 import { zValidator } from "@hono/zod-validator";
 import { createCategorySchema } from "./validators.ts";
+import { authMiddleware } from "../../middlewares/auth.ts";
 
 export const categoryRouter = app.basePath("/categories");
 
-categoryRouter.get("/", async (c) => {
+categoryRouter.get("/", authMiddleware, async (c) => {
   const categories = await db.query.categoryTable.findMany();
 
   return c.json({ categories });
 });
 
-categoryRouter.get("/:id", validateParamsId, async (c) => {
+categoryRouter.get("/:id", authMiddleware, validateParamsId, async (c) => {
   const { id } = c.req.valid("param");
   const category = await db.query.categoryTable.findFirst({
     where: eq(categoryTable.id, id),
@@ -32,6 +33,7 @@ categoryRouter.get("/:id", validateParamsId, async (c) => {
 
 categoryRouter.post(
   "/",
+  authMiddleware,
   zValidator("json", createCategorySchema),
   async (c) => {
     const payload = c.req.valid("json");
@@ -47,6 +49,7 @@ categoryRouter.post(
 
 categoryRouter.put(
   ":id",
+  authMiddleware,
   validateParamsId,
   zValidator("json", createCategorySchema),
   async (c) => {
@@ -63,7 +66,7 @@ categoryRouter.put(
   }
 );
 
-categoryRouter.get("/user/:id", validateParamsId, async (c) => {
+categoryRouter.get("/user/:id", authMiddleware, validateParamsId, async (c) => {
   const { id } = c.req.valid("param");
 
   const categories = await db.query.categoryTable.findMany({
