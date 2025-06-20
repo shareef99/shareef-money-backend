@@ -15,6 +15,13 @@
       "when": 1749761034476,
       "tag": "0001_slim_mauler",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1750451090150,
+      "tag": "0002_loving_millenium_guard",
+      "breakpoints": true
     }
   ]
 }
