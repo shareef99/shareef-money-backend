@@ -10,6 +10,7 @@ import {
   subcategoryRelations,
   subcategoryTable,
 } from "../features/subcategory/schema.ts";
+import { accountRelations, accountTable } from "../features/account/schema.ts";
 
 export const db = drizzle({
   connection: env.DATABASE_URL,
@@ -21,5 +22,7 @@ export const db = drizzle({
     categoryRelations,
     subcategoryTable,
     subcategoryRelations,
+    accountTable,
+    accountRelations,
   },
 });
