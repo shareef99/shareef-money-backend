@@ -6,15 +6,16 @@ import { accountTable } from "./schema.ts";
 import { HTTPException } from "hono/http-exception";
 import { zValidator } from "@hono/zod-validator";
 import { createAccountSchema, updateAccountSchema } from "./validators.ts";
+import { authMiddleware } from "../../middlewares/auth.ts";
 
 export const accountRouter = app.basePath("/accounts");
 
-accountRouter.get("/", async (c) => {
+accountRouter.get("/", authMiddleware, async (c) => {
   const accounts = await db.query.accountTable.findMany();
   return c.json({ accounts });
 });
 
-accountRouter.get("/:id", validateParamsId, async (c) => {
+accountRouter.get("/:id", authMiddleware, validateParamsId, async (c) => {
   const { id } = c.req.valid("param");
   const account = await db.query.accountTable.findFirst({
     where: eq(accountTable.id, id),
@@ -29,19 +30,25 @@ accountRouter.get("/:id", validateParamsId, async (c) => {
   return c.json({ account });
 });
 
-accountRouter.post("/", zValidator("json", createAccountSchema), async (c) => {
-  const payload = c.req.valid("json");
+accountRouter.post(
+  "/",
+  authMiddleware,
+  zValidator("json", createAccountSchema),
+  async (c) => {
+    const payload = c.req.valid("json");
 
-  const [createdAccount] = await db
-    .insert(accountTable)
-    .values(payload)
-    .returning();
+    const [createdAccount] = await db
+      .insert(accountTable)
+      .values(payload)
+      .returning();
 
-  return c.json({ account: createdAccount });
-});
+    return c.json({ account: createdAccount });
+  }
+);
 
 accountRouter.put(
   ":id",
+  authMiddleware,
   validateParamsId,
   zValidator("json", updateAccountSchema),
   async (c) => {

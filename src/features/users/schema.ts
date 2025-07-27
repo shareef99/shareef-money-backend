@@ -9,6 +9,7 @@ import { weekDays } from "../../types/enums.ts";
 import { relations } from "drizzle-orm/relations";
 import { categoryTable } from "../category/schema.ts";
 import { accountTable } from "../account/schema.ts";
+import { transactionsTable } from "../transactions/schema.ts";
 
 export const userTable = pgTable("users", {
   id: serial("id").primaryKey(),
@@ -31,4 +32,5 @@ export const userTable = pgTable("users", {
 export const userRelations = relations(userTable, ({ many }) => ({
   categories: many(categoryTable),
   accounts: many(accountTable),
+  transactions: many(transactionsTable),
 }));

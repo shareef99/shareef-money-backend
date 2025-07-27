@@ -7,6 +7,7 @@ import {
 } from "drizzle-orm/pg-core";
 import { categoryTable } from "../category/schema.ts";
 import { relations } from "drizzle-orm/relations";
+import { transactionsTable } from "../transactions/schema.ts";
 
 export const subcategoryTable = pgTable("subcategories", {
   id: serial("id").primaryKey(),
@@ -21,9 +22,13 @@ export const subcategoryTable = pgTable("subcategories", {
     .notNull(),
 });
 
-export const subcategoryRelations = relations(subcategoryTable, ({ one }) => ({
-  category: one(categoryTable, {
-    fields: [subcategoryTable.category_id],
-    references: [categoryTable.id],
-  }),
-}));
+export const subcategoryRelations = relations(
+  subcategoryTable,
+  ({ one, many }) => ({
+    category: one(categoryTable, {
+      fields: [subcategoryTable.category_id],
+      references: [categoryTable.id],
+    }),
+    transactions: many(transactionsTable),
+  })
+);

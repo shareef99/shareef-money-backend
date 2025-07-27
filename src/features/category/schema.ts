@@ -9,6 +9,7 @@ import { userTable } from "../users/schema.ts";
 import { categoryTypes } from "../../types/enums.ts";
 import { relations } from "drizzle-orm/relations";
 import { subcategoryTable } from "../subcategory/schema.ts";
+import { transactionsTable } from "../transactions/schema.ts";
 
 export const categoryTable = pgTable("categories", {
   id: serial("id").primaryKey(),
@@ -30,4 +31,5 @@ export const categoryRelations = relations(categoryTable, ({ one, many }) => ({
     references: [userTable.id],
   }),
   subcategories: many(subcategoryTable),
+  transactions: many(transactionsTable),
 }));
