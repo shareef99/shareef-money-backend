@@ -25,8 +25,32 @@ userRouter.get("/", authMiddleware, async (c) => {
 userRouter.post("/login", zValidator("json", loginSchema), async (c) => {
   const payload = c.req.valid("json");
 
+  const res = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+    headers: {
+      Authorization: `Bearer ${payload.access_token}`,
+    },
+  });
+
+  if (!res.ok) {
+    throw new HTTPException(400, {
+      message: "Failed to get user profile from google",
+    });
+  }
+
+  type Profile = {
+    sub: string;
+    name: string;
+    given_name: string;
+    family_name: string;
+    picture: string;
+    email: string;
+    email_verified: boolean;
+  };
+
+  const profile: Profile = await res.json();
+
   const existingUser = await db.query.userTable.findFirst({
-    where: eq(userTable.email, payload.email),
+    where: eq(userTable.email, profile.email),
   });
 
   if (existingUser) {
@@ -66,22 +90,22 @@ userRouter.post("/login", zValidator("json", loginSchema), async (c) => {
 
     c.set("user_id", existingUser.id);
 
-    return c.json({ user: existingUser, accessToken, refreshToken });
+    return c.json({ user: existingUser });
   }
 
   const [createdUser] = await db
     .insert(userTable)
     .values({
-      name: payload.name,
-      email: payload.email,
+      name: profile.name,
+      email: profile.email,
       refer_code: generateReferralCode(),
     })
     .returning();
 
   const tokenPayload: TokenPayload = {
     id: createdUser.id,
-    name: payload.name,
-    email: payload.email,
+    name: profile.name,
+    email: profile.email,
   };
 
   const accessToken = await sign(tokenPayload, env.SECRET_KEY);
@@ -111,7 +135,7 @@ userRouter.post("/login", zValidator("json", loginSchema), async (c) => {
     }
   );
 
-  return c.json({ user: createdUser, accessToken, refreshToken });
+  return c.json({ user: createdUser });
 });
 
 userRouter.post("/refresh", async (c) => {
